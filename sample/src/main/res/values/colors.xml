@@ -1,6 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#16A085</color>
+    <color name="colorPrimaryDark">#006D52</color>
+    <color name="colorAccent">#3498DB</color>
+
+    <!-- Colors from http://flatuicolors.com -->
+    <!-- Background Colors -->
+    <color name="turquoise">#1abc9c</color>
+    <color name="green_sea">#16a085</color>
+    <color name="emerald">#2ecc71</color>
+    <color name="nephritis">#27ae60</color>
+    <color name="peter_river">#3498db</color>
+    <color name="belize_hole">#2980b9</color>
+    <color name="amethyst">#9b59b6</color>
+    <color name="wisteria">#8e44ad</color>
+    <color name="wet_asphalt">#34495e</color>
+    <color name="midnight_blue">#2c3e50</color>
+    <color name="sunflower">#f1c40f</color>
+    <color name="orange">#f39c12</color>
+    <color name="carrot">#e67e22</color>
+    <color name="pumpkin">#d35400</color>
+    <color name="alizarin">#e74c3c</color>
+    <color name="pomegranate">#c0392b</color>
+    <color name="clouds">#ecf0f1</color>
+    <color name="silver">#bdc3c7</color>
+    <color name="concrete">#95a5a6</color>
+    <color name="asbestos">#7f8c8d</color>
+
+    <!-- Text Colours -->
+    <color name="textDefault">#FEFEFE</color>
+    <color name="textDark">#898989</color>
+
+    <!-- As Array -->
+    <array name="colours">
+        <item>@color/turquoise</item>
+        <item>@color/green_sea</item>
+        <item>@color/emerald</item>
+        <item>@color/nephritis</item>
+        <item>@color/peter_river</item>
+        <item>@color/belize_hole</item>
+        <item>@color/amethyst</item>
+        <item>@color/wisteria</item>
+        <item>@color/wet_asphalt</item>
+        <item>@color/midnight_blue</item>
+        <item>@color/sunflower</item>
+        <item>@color/orange</item>
+        <item>@color/carrot</item>
+        <item>@color/pumpkin</item>
+        <item>@color/alizarin</item>
+        <item>@color/pomegranate</item>
+        <item>@color/clouds</item>
+        <item>@color/silver</item>
+        <item>@color/concrete</item>
+        <item>@color/asbestos</item>
+    </array>
+
 </resources>
