@@ -1,35 +1,49 @@
 package com.github.tonywills.loadingbutton;
 
+import android.animation.Animator;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-public class LoadingButton extends RelativeLayout
-        implements LoadingButtonFindViewsDelegate, LoadingButtonShowHideDelegate {
+/**
+ * A Simple to include Loading button with nice defaults.
+ * Uses a {@link ViewSwitcher} under the hood so you can customise the animations by
+ * setting your own delegate.
+ * @author Anthony Williams (github.com/92tonywills)
+ */
+public class LoadingButton extends ViewSwitcher implements ViewSwitcher.AnimationDelegate {
 
     // Members
 
-    @NonNull private LoadingButtonFindViewsDelegate findViewsDelegate;
-    @NonNull private LoadingButtonShowHideDelegate showHideDelegate;
-    @Nullable private View textView;
-    @Nullable private View progressBar;
+    private View textView;
+    private View loadingView;
     private boolean loading;
+    private boolean isAnimatingTextView;
+    private boolean isAnimatingLoadingView;
 
     // Constructors
 
     public LoadingButton(Context context, AttributeSet attrs) {
         super(context, attrs);
+        LayoutInflater.from(context).inflate(R.layout.compound_view_loading_button, this, true);
+        setAnimationDelegate(this);
         loading = false;
-        findViewsDelegate = this;
-        showHideDelegate = this;
     }
 
     // Behaviours
+
+    // Overrides
+
+    @Override protected void onFinishInflate() {
+        super.onFinishInflate();
+        textView = findViewById(R.id.loading_button_text);
+        loadingView = findViewById(R.id.loading_button_spinner);
+    }
+
+    // Helpers
+
+    // Accessors
 
     public boolean isLoading() {
         return loading;
@@ -37,112 +51,85 @@ public class LoadingButton extends RelativeLayout
 
     public void setLoading(boolean loading) {
         this.loading = loading;
-        if (loading) {
-            showHideDelegate.hideTextView(textView);
-            showHideDelegate.showLoadingView(progressBar);
+        showViewAtIndex(loading ? 1 : 0);
+        setEnabled(!loading);
+    }
+
+    // Animation Delegate
+
+    @Override public void onHideViewAtIndex(View view, int index) {
+        if (index == 0) {
+            hideTextView();
         } else {
-            showHideDelegate.showTextView(textView);
-            showHideDelegate.hideLoadingView(progressBar);
+            hideLoadingView();
         }
     }
 
-    // Overrides
-
-    @Override protected void onFinishInflate() {
-        super.onFinishInflate();
-    }
-
-    @Override protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        pullViewsFromDelegate();
-    }
-
-    // Helpers
-
-    private void pullViewsFromDelegate() {
-        textView = findViewsDelegate.getTextView();
-        progressBar = findViewsDelegate.getLoadingView();
-        makeViewsMatchLoadingState();
-    }
-
-    private void makeViewsMatchLoadingState() {
-        if (textView != null) {
-            textView.setAlpha(loading ? 0 : 1);
-        }
-        if (progressBar != null) {
-            progressBar.setAlpha(loading ? 1 : 0);
+    @Override public void onShowViewAtIndex(View view, int index) {
+        if (index == 0) {
+            showTextView();
+        } else {
+            showLoadingView();
         }
     }
 
-    // Accessors
-
-    public void setFindViewsDelegate(@NonNull LoadingButtonFindViewsDelegate findViewsDelegate) {
-        this.findViewsDelegate = findViewsDelegate;
-        pullViewsFromDelegate();
-    }
-
-    public void setShowHideDelegate(@NonNull LoadingButtonShowHideDelegate showHideDelegate) {
-        this.showHideDelegate = showHideDelegate;
-    }
-
-    public void unsetFindDelegate() {
-        this.findViewsDelegate = this;
-        pullViewsFromDelegate();
-    }
-
-    public void unsetShowHideDelegate() {
-        this.showHideDelegate = this;
-    }
-
-    // LoadingButtonFindViews Delegate
-
-    @Override public View getTextView() {
-        for (int i = 0; i < getChildCount(); i++) {
-            View child = getChildAt(i);
-            if (child instanceof TextView) {
-                return child;
+    private void showTextView() {
+        if (isAnimatingTextView) {
+            textView.setAlpha(1);
+            textView.setTranslationX(0);
+            textView.setVisibility(VISIBLE);
+        }
+        isAnimatingTextView = true;
+        textView.setVisibility(VISIBLE);
+        textView.animate().translationX(0).alpha(1).setListener(new SimpleAnimatorListener() {
+            @Override public void onAnimationEnd(Animator animation) {
+                isAnimatingTextView = false;
             }
-        }
-
-        return null;
+        }).start();
     }
 
-    @Override public View getLoadingView() {
-        for (int i = 0; i < getChildCount(); i++) {
-            View child = getChildAt(i);
-            if (child instanceof ProgressBar) {
-                return child;
+    private void hideTextView() {
+        if (isAnimatingTextView) {
+            textView.setAlpha(0);
+            textView.setTranslationX(-textView.getMeasuredWidth() * 2);
+            textView.setVisibility(INVISIBLE);
+        }
+        isAnimatingTextView = true;
+        textView.animate().translationX(-textView.getMeasuredWidth() * 2).alpha(0)
+                .setListener(new SimpleAnimatorListener() {
+                    @Override public void onAnimationEnd(Animator animation) {
+                        textView.setVisibility(INVISIBLE);
+                        isAnimatingTextView = false;
+                    }
+                }).start();
+    }
+
+    private void showLoadingView() {
+        if (isAnimatingLoadingView) {
+            loadingView.setAlpha(1);
+            loadingView.setVisibility(VISIBLE);
+        }
+        isAnimatingLoadingView = true;
+        loadingView.setVisibility(VISIBLE);
+        loadingView.animate().alpha(1).setListener(new SimpleAnimatorListener() {
+            @Override public void onAnimationEnd(Animator animation) {
+                isAnimatingLoadingView = false;
             }
-        }
-
-        return null;
+        }).start();
     }
 
-    // LoadingButtonShowHideDelegate
-
-    @Override public void hideLoadingView(View view) {
-        if (view != null) {
-            view.animate().alpha(0).start();
+    private void hideLoadingView() {
+        if (isAnimatingLoadingView) {
+            loadingView.setAlpha(0);
+            loadingView.setVisibility(INVISIBLE);
         }
-    }
-
-    @Override public void showLoadingView(View view) {
-        if (view != null) {
-            view.animate().alpha(1).start();
-        }
-    }
-
-    @Override public void showTextView(View view) {
-        if (view != null) {
-            view.setTranslationX(view.getMeasuredWidth() * 2);
-            view.animate().translationX(0).alpha(1).start();
-        }
-    }
-
-    @Override public void hideTextView(View view) {
-        if (view != null) {
-            view.animate().translationX(-view.getMeasuredWidth() * 2).alpha(0).start();
-        }
+        isAnimatingLoadingView = true;
+        loadingView.animate().alpha(0).setListener(new SimpleAnimatorListener() {
+            @Override public void onAnimationEnd(Animator animation) {
+                loadingView.setVisibility(INVISIBLE);
+                isAnimatingLoadingView = false;
+            }
+        }).start();
     }
 
 }

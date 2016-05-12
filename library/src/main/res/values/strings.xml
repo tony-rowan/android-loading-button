@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">LoadingButton</string>
+    <string name="loading">Loading...</string>
+    <string name="go">Go</string>
 </resources>

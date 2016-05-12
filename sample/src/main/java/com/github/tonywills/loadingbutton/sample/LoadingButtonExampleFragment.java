@@ -7,7 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.tonywills.loadingbutton.LoadingButton;
+
 public class LoadingButtonExampleFragment extends Fragment {
+
+    private LoadingButton loadingButton;
 
     public LoadingButtonExampleFragment() {
         // Required empty public constructor
@@ -30,5 +34,11 @@ public class LoadingButtonExampleFragment extends Fragment {
 
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        loadingButton = (LoadingButton) view.findViewById(R.id.loading_button);
+        loadingButton.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                loadingButton.setLoading(!loadingButton.isLoading());
+            }
+        });
     }
 }
