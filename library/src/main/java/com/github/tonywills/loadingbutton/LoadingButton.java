@@ -1,6 +1,5 @@
 package com.github.tonywills.loadingbutton;
 
-import android.animation.Animator;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -19,8 +18,6 @@ public class LoadingButton extends ViewSwitcher implements ViewSwitcher.Animatio
     private View textView;
     private View loadingView;
     private boolean loading;
-    private boolean isAnimatingTextView;
-    private boolean isAnimatingLoadingView;
 
     // Constructors
 
@@ -31,8 +28,6 @@ public class LoadingButton extends ViewSwitcher implements ViewSwitcher.Animatio
         loading = false;
     }
 
-    // Behaviours
-
     // Overrides
 
     @Override protected void onFinishInflate() {
@@ -40,8 +35,6 @@ public class LoadingButton extends ViewSwitcher implements ViewSwitcher.Animatio
         textView = findViewById(R.id.loading_button_text);
         loadingView = findViewById(R.id.loading_button_spinner);
     }
-
-    // Helpers
 
     // Accessors
 
@@ -52,7 +45,6 @@ public class LoadingButton extends ViewSwitcher implements ViewSwitcher.Animatio
     public void setLoading(boolean loading) {
         this.loading = loading;
         showViewAtIndex(loading ? 1 : 0);
-        setEnabled(!loading);
     }
 
     // Animation Delegate
@@ -74,62 +66,21 @@ public class LoadingButton extends ViewSwitcher implements ViewSwitcher.Animatio
     }
 
     private void showTextView() {
-        if (isAnimatingTextView) {
-            textView.setAlpha(1);
-            textView.setTranslationX(0);
-            textView.setVisibility(VISIBLE);
-        }
-        isAnimatingTextView = true;
         textView.setVisibility(VISIBLE);
-        textView.animate().translationX(0).alpha(1).setListener(new SimpleAnimatorListener() {
-            @Override public void onAnimationEnd(Animator animation) {
-                isAnimatingTextView = false;
-            }
-        }).start();
+        textView.animate().translationX(0).alpha(1);
     }
 
     private void hideTextView() {
-        if (isAnimatingTextView) {
-            textView.setAlpha(0);
-            textView.setTranslationX(-textView.getMeasuredWidth() * 2);
-            textView.setVisibility(INVISIBLE);
-        }
-        isAnimatingTextView = true;
-        textView.animate().translationX(-textView.getMeasuredWidth() * 2).alpha(0)
-                .setListener(new SimpleAnimatorListener() {
-                    @Override public void onAnimationEnd(Animator animation) {
-                        textView.setVisibility(INVISIBLE);
-                        isAnimatingTextView = false;
-                    }
-                }).start();
+        textView.animate().translationX(-textView.getMeasuredWidth() * 2).alpha(0);
     }
 
     private void showLoadingView() {
-        if (isAnimatingLoadingView) {
-            loadingView.setAlpha(1);
-            loadingView.setVisibility(VISIBLE);
-        }
-        isAnimatingLoadingView = true;
         loadingView.setVisibility(VISIBLE);
-        loadingView.animate().alpha(1).setListener(new SimpleAnimatorListener() {
-            @Override public void onAnimationEnd(Animator animation) {
-                isAnimatingLoadingView = false;
-            }
-        }).start();
+        loadingView.animate().alpha(1);
     }
 
     private void hideLoadingView() {
-        if (isAnimatingLoadingView) {
-            loadingView.setAlpha(0);
-            loadingView.setVisibility(INVISIBLE);
-        }
-        isAnimatingLoadingView = true;
-        loadingView.animate().alpha(0).setListener(new SimpleAnimatorListener() {
-            @Override public void onAnimationEnd(Animator animation) {
-                loadingView.setVisibility(INVISIBLE);
-                isAnimatingLoadingView = false;
-            }
-        }).start();
+        loadingView.animate().alpha(0);
     }
 
 }

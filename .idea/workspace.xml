@@ -11,10 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c9b0d0a3-6b1f-4460-95dd-8db987d16d2e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/library/src/main/java/com/github/tonywills/loadingbutton/ViewSwitcher.java" afterPath="$PROJECT_DIR$/library/src/main/java/com/github/tonywills/loadingbutton/ViewSwitcher.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sample/src/main/java/com/github/tonywills/loadingbutton/sample/ViewSwitcherExampleFragment.java" afterPath="$PROJECT_DIR$/sample/src/main/java/com/github/tonywills/loadingbutton/sample/ViewSwitcherExampleFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sample/src/main/res/layout/fragment_view_switcher_example.xml" afterPath="$PROJECT_DIR$/sample/src/main/res/layout/fragment_view_switcher_example.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sample/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/sample/src/main/res/values/strings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/library/src/main/java/com/github/tonywills/loadingbutton/LoadingButton.java" afterPath="$PROJECT_DIR$/library/src/main/java/com/github/tonywills/loadingbutton/LoadingButton.java" />
     </list>
     <ignored path="LoadingButton.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -35,35 +32,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ViewSwitcherExampleFragment.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/sample/src/main/java/com/github/tonywills/loadingbutton/sample/ViewSwitcherExampleFragment.java">
+      <file leaf-file-name="LoadingButton.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/library/src/main/java/com/github/tonywills/loadingbutton/LoadingButton.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.7076923">
-              <caret line="93" column="9" selection-start-line="93" selection-start-column="9" selection-end-line="93" selection-end-column="9" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fragment_view_switcher_example.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sample/src/main/res/layout/fragment_view_switcher_example.xml">
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.862069">
-              <caret line="25" column="39" selection-start-line="25" selection-start-column="39" selection-end-line="25" selection-end-column="39" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ViewSwitcher.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/library/src/main/java/com/github/tonywills/loadingbutton/ViewSwitcher.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="37" column="72" selection-start-line="37" selection-start-column="72" selection-end-line="37" selection-end-column="72" />
-              <folding />
+            <state vertical-scroll-proportion="-0.06153846">
+              <caret line="47" column="0" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+              <folding>
+                <element signature="e#2149#2150#0" expanded="true" />
+                <element signature="e#2195#2196#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -2845,11 +2822,11 @@
         <option value="$PROJECT_DIR$/library/src/main/java/com/github/tonywills/loadingbutton/SimpleAnimatorListener.java" />
         <option value="$PROJECT_DIR$/sample/src/main/java/com/github/tonywills/loadingbutton/sample/LoadingButtonExampleFragment.java" />
         <option value="$PROJECT_DIR$/library/src/main/res/layout/compound_view_loading_button.xml" />
-        <option value="$PROJECT_DIR$/library/src/main/java/com/github/tonywills/loadingbutton/LoadingButton.java" />
         <option value="$PROJECT_DIR$/sample/src/main/res/layout/fragment_loading_button_example.xml" />
         <option value="$PROJECT_DIR$/library/src/main/java/com/github/tonywills/loadingbutton/ViewSwitcher.java" />
         <option value="$PROJECT_DIR$/sample/src/main/res/layout/fragment_view_switcher_example.xml" />
         <option value="$PROJECT_DIR$/sample/src/main/java/com/github/tonywills/loadingbutton/sample/ViewSwitcherExampleFragment.java" />
+        <option value="$PROJECT_DIR$/library/src/main/java/com/github/tonywills/loadingbutton/LoadingButton.java" />
       </list>
     </option>
   </component>
@@ -3608,14 +3585,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/library/src/main/java/com/github/tonywills/loadingbutton/LoadingButton.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="97" column="0" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.gradle/gradle.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -3624,10 +3593,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/library/src/main/java/com/github/tonywills/loadingbutton/ViewSwitcher.java">
+    <entry file="file://$PROJECT_DIR$/sample/src/main/java/com/github/tonywills/loadingbutton/sample/ViewSwitcherExampleFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="37" column="72" selection-start-line="37" selection-start-column="72" selection-end-line="37" selection-end-column="72" />
+          <caret line="25" column="24" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
           <folding />
         </state>
       </provider>
@@ -3637,17 +3606,28 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.862069">
+        <state vertical-scroll-proportion="0.5072464">
           <caret line="25" column="39" selection-start-line="25" selection-start-column="39" selection-end-line="25" selection-end-column="39" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sample/src/main/java/com/github/tonywills/loadingbutton/sample/ViewSwitcherExampleFragment.java">
+    <entry file="file://$PROJECT_DIR$/library/src/main/java/com/github/tonywills/loadingbutton/ViewSwitcher.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.7076923">
-          <caret line="93" column="9" selection-start-line="93" selection-start-column="9" selection-end-line="93" selection-end-column="9" />
+        <state vertical-scroll-proportion="-0.08461539">
+          <caret line="37" column="72" selection-start-line="37" selection-start-column="72" selection-end-line="37" selection-end-column="72" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/library/src/main/java/com/github/tonywills/loadingbutton/LoadingButton.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.06153846">
+          <caret line="47" column="0" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+          <folding>
+            <element signature="e#2149#2150#0" expanded="true" />
+            <element signature="e#2195#2196#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
