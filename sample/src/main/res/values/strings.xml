@@ -4,4 +4,8 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="click_me">Click Me</string>
+    <string name="right">Right</string>
+    <string name="left">Left</string>
+    <string name="bottom">Bottom</string>
+    <string name="top">Top</string>
 </resources>

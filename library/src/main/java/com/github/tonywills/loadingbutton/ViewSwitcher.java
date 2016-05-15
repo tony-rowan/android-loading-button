@@ -34,9 +34,12 @@ public class ViewSwitcher extends FrameLayout {
     /**
      * Calls the animation delegate to animate in the child view at the given index and animate out
      * the currently shown view. If no animation delegate is attached, they are simply set to VISIBLE / INVISIBLE.
+     * If there is a delegate attached, it must take care of setting views VISIBLE / INVISIBLE.
+     * If the view to show is already on show, the method returns early.
      * @param index The index of the child - the order in the xml layout or the order in which they were added.
      */
     public void showViewAtIndex(int index) {
+        if (index == childOnShowIndex) { return; }
         hideCurrentlyShowView();
         childOnShowIndex = index;
         showCurrentlyShownView();
