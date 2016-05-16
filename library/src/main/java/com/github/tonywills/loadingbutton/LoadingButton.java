@@ -4,28 +4,36 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 
 /**
  * A Simple to include Loading button with nice defaults.
- * Uses a {@link ViewSwitcher} under the hood so you can customise the animations by
- * setting your own delegate.
+ * You can customise the animations by subclassing the button and overriding the animateToState method.
  * @author Anthony Williams (github.com/92tonywills)
  */
-public class LoadingButton extends ViewSwitcher implements ViewSwitcher.AnimationDelegate {
+public class LoadingButton extends LinearLayout {
+
+    public enum State {
+        DEFAULT, LOADING
+    }
 
     // Members
 
+    private int buttonColor;
+    private int loadingColor;
+    private String defaultText;
+    private String loadingText;
+
     private View textView;
     private View loadingView;
-    private boolean loading;
+    private State buttonState;
 
     // Constructors
 
     public LoadingButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.compound_view_loading_button, this, true);
-        setAnimationDelegate(this);
-        loading = false;
+        buttonState = State.DEFAULT;
     }
 
     // Overrides
@@ -34,53 +42,53 @@ public class LoadingButton extends ViewSwitcher implements ViewSwitcher.Animatio
         super.onFinishInflate();
         textView = findViewById(R.id.loading_button_text);
         loadingView = findViewById(R.id.loading_button_spinner);
+
+        loadingView.setVisibility(GONE);
     }
 
     // Accessors
 
     public boolean isLoading() {
-        return loading;
+        return buttonState == State.DEFAULT;
     }
 
     public void setLoading(boolean loading) {
-        this.loading = loading;
-        showViewAtIndex(loading ? 1 : 0);
+        this.buttonState = loading ? State.LOADING : State.DEFAULT;
+        animateToState(this.buttonState);
     }
 
-    // Animation Delegate
+    // xml based
 
-    @Override public void onHideViewAtIndex(View view, int index) {
-        if (index == 0) {
-            hideTextView();
+    public void setButtonColor(int color) {
+
+    }
+
+    public void setLoadingColor(int color) {
+
+    }
+
+    public void setButtonText(String text, State state) {
+
+    }
+
+    // Animation
+
+    public void animateToState(State newState) {
+        if (newState == State.DEFAULT) {
+            showLoadingView();
         } else {
             hideLoadingView();
         }
     }
 
-    @Override public void onShowViewAtIndex(View view, int index) {
-        if (index == 0) {
-            showTextView();
-        } else {
-            showLoadingView();
-        }
-    }
-
-    private void showTextView() {
-        textView.setVisibility(VISIBLE);
-        textView.animate().translationX(0).alpha(1);
-    }
-
-    private void hideTextView() {
-        textView.animate().translationX(-textView.getMeasuredWidth() * 2).alpha(0);
-    }
-
     private void showLoadingView() {
         loadingView.setVisibility(VISIBLE);
-        loadingView.animate().alpha(1);
+        loadingView.setTranslationX(0);
+        loadingView.animate().alpha(1).translationX(loadingView.getMeasuredWidth());
     }
 
     private void hideLoadingView() {
-        loadingView.animate().alpha(0);
+        loadingView.animate().alpha(0).translationX(loadingView.getMeasuredWidth() * 2);
     }
 
 }

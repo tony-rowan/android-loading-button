@@ -5,14 +5,14 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 /**
  * A Simple to use Layout that can switch between its children.
  * Provides a delegate customise transitions.
  * @author Anthony Williams (github.com/92tonywills)
  */
-public class ViewSwitcher extends FrameLayout {
+public class ViewSwitcher extends RelativeLayout {
 
     private static final String TAG = "ViewSwitcher";
 
