@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         assert spinner != null;
         assert toolbar != null;
         spinner.setAdapter(new MyAdapter(toolbar.getContext(),
-                new String[] { "Loading Button", "Generic View Switcher" })
+                new String[] { "Loading Button" })
         );
 
         spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -54,8 +54,6 @@ public class MainActivity extends AppCompatActivity {
         switch (position) {
             case 0:
                 return LoadingButtonExampleFragment.newInstance();
-            case 1:
-                return ViewSwitcherExampleFragment.newInstance();
 
             default:
                 throw new IllegalArgumentException("Unknown position " + position);
