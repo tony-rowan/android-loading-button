@@ -57,7 +57,7 @@ public class LoadingButton extends LinearLayout {
 
         textView.setText(defaultText);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            loadingView.setIndeterminateTintList(new ColorStateList(new int[][]{}, new int[]{loadingColor}));
+            loadingView.setIndeterminateTintList(new ColorStateList(new int[][]{new int[] {}}, new int[]{loadingColor}));
         }
     }
 
@@ -72,12 +72,20 @@ public class LoadingButton extends LinearLayout {
         animateToState(this.buttonState);
     }
 
+    public TextView getTextView() {
+        return textView;
+    }
+
+    public ProgressBar getLoadingView() {
+        return loadingView;
+    }
+
     // xml based
 
     public void setLoadingColor(int color) {
         loadingColor = color;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            loadingView.setIndeterminateTintList(new ColorStateList(new int[][]{}, new int[]{loadingColor}));
+            loadingView.setIndeterminateTintList(new ColorStateList(new int[][]{new int[] {}}, new int[]{loadingColor}));
         }
     }
 
