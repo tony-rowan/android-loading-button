@@ -3,7 +3,7 @@
 # Created by https://www.gitignore.io/api/osx,linux,sublimetext,windows,android,java,swift,objective-c,xcode
 
 ### OSX ###
-.DS_Store
+*.DS_Store
 .AppleDouble
 .LSOverride
 
@@ -58,6 +58,19 @@ Temporary Items
 
 # sftp configuration file
 sftp-config.json
+
+# Package control specific files
+Package Control.last-run
+Package Control.ca-list
+Package Control.ca-bundle
+Package Control.system-ca-bundle
+Package Control.cache/
+Package Control.ca-certs/
+bh_unicode_properties.cache
+
+# Sublime-github package stores a github token in this file
+# https://packagecontrol.io/packages/sublime-github
+GitHub.sublime-settings
 
 
 ### Windows ###
@@ -293,4 +306,14 @@ xcuserdata/
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
+# Ignore the Pods folder for XCode Projects
 Pods/
+# Ignore the AndroidStudio idea folder
+.idea/
+# Ignore all design files that may be in the folder
+.afdesign/
+.ai/
+.psd/
+# Ignore XCode Build Artifacts
+.dSYM.zip/
+.ipa/
