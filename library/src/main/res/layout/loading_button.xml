@@ -4,6 +4,12 @@
     android:layout_height="wrap_content"
     style="@style/Widget.AppCompat.Button.Colored">
 
+
+    <ProgressBar android:id="@+id/loading_button_spinner_left"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_margin="8dp" />
+
     <TextView android:id="@+id/loading_button_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -13,9 +19,9 @@
         android:textColor="@android:color/white"
         android:text="@string/go" />
 
-    <ProgressBar android:id="@+id/loading_button_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="12dp" />
+    <ProgressBar android:id="@+id/loading_button_spinner_right"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_margin="8dp" />
 
 </merge>

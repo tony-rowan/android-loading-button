@@ -19,15 +19,19 @@ import android.widget.TextView;
 public class LoadingButton extends LinearLayout {
 
     public enum State { DEFAULT, LOADING }
+    public enum LoadingPosition { LEFT, RIGHT }
 
     // Members
 
+    private LoadingPosition loadingPosition;
+    private int buttonTintColor;
     private int loadingColor;
     private String defaultText;
     private String loadingText;
 
     private TextView textView;
-    private ProgressBar loadingView;
+    private ProgressBar loadingViewLeft;
+    private ProgressBar loadingViewRight;
     private State buttonState;
 
     // Constructors
@@ -40,11 +44,25 @@ public class LoadingButton extends LinearLayout {
 
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.LoadingButton, 0, 0);
         try {
+            loadingPosition = a.getInt(R.styleable.LoadingButton_loadingPosition, 0) == 0 ?
+                    LoadingPosition.LEFT : LoadingPosition.RIGHT;
+            buttonTintColor = a.getColor(R.styleable.LoadingButton_buttonBackgroundTint, Color.rgb(255, 193, 7));
             loadingColor = a.getColor(R.styleable.LoadingButton_loadingColor, Color.rgb(255, 193, 7));
             defaultText = a.getString(R.styleable.LoadingButton_buttonTextDefault);
             loadingText = a.getString(R.styleable.LoadingButton_buttonTextLoading);
         } finally {
             a.recycle();
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setBackgroundTintList(new ColorStateList(
+                    new int[][] {
+                            ENABLED_STATE_SET,
+                            new int[] {}
+                    }, new int[] {
+                            buttonTintColor,
+                            getLessVibrantColor(buttonTintColor, 1.25f)
+            }));
         }
     }
 
@@ -53,11 +71,23 @@ public class LoadingButton extends LinearLayout {
     @Override protected void onFinishInflate() {
         super.onFinishInflate();
         textView = (TextView) findViewById(R.id.loading_button_text);
-        loadingView = (ProgressBar) findViewById(R.id.loading_button_spinner);
+        loadingViewLeft = (ProgressBar) findViewById(R.id.loading_button_spinner_left);
+        loadingViewRight = (ProgressBar) findViewById(R.id.loading_button_spinner_right);
 
         textView.setText(defaultText);
+        loadingViewLeft.setVisibility(INVISIBLE);
+        loadingViewRight.setVisibility(INVISIBLE);
+        loadingViewLeft.setAlpha(0f);
+        loadingViewRight.setAlpha(0f);
+        setProgressBarColor();
+    }
+
+    // Helpers
+
+    private void setProgressBarColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            loadingView.setIndeterminateTintList(new ColorStateList(new int[][]{new int[] {}}, new int[]{loadingColor}));
+            loadingViewLeft.setIndeterminateTintList(new ColorStateList(new int[][]{new int[] {}}, new int[]{loadingColor}));
+            loadingViewRight.setIndeterminateTintList(new ColorStateList(new int[][]{new int[] {}}, new int[]{loadingColor}));
         }
     }
 
@@ -69,6 +99,7 @@ public class LoadingButton extends LinearLayout {
 
     public void setLoading(boolean loading) {
         this.buttonState = loading ? State.LOADING : State.DEFAULT;
+        setEnabled(!loading);
         animateToState(this.buttonState);
     }
 
@@ -77,16 +108,12 @@ public class LoadingButton extends LinearLayout {
     }
 
     public ProgressBar getLoadingView() {
-        return loadingView;
+        return loadingPosition == LoadingPosition.LEFT ? loadingViewLeft : loadingViewRight;
     }
-
-    // xml based
 
     public void setLoadingColor(int color) {
         loadingColor = color;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            loadingView.setIndeterminateTintList(new ColorStateList(new int[][]{new int[] {}}, new int[]{loadingColor}));
-        }
+        setProgressBarColor();
     }
 
     public void setButtonText(String text, State state) {
@@ -110,13 +137,26 @@ public class LoadingButton extends LinearLayout {
 
     private void showLoadingView() {
         textView.setText(loadingText);
+        ProgressBar loadingView = getLoadingView();
+        loadingView.setVisibility(VISIBLE);
         loadingView.setTranslationX(-loadingView.getMeasuredWidth());
         loadingView.animate().alpha(1).translationX(0);
     }
 
     private void hideLoadingView() {
         textView.setText(defaultText);
+        ProgressBar loadingView = getLoadingView();
         loadingView.animate().alpha(0).translationX(loadingView.getMeasuredWidth() * 3);
+    }
+
+    // Static Helpers
+
+    private static int getLessVibrantColor(int colour, float factor) {
+        float[] hsv = new float[3];
+        Color.colorToHSV(colour, hsv);
+        hsv[1] *= 1 / factor;
+        hsv[2] *= factor;
+        return Color.HSVToColor(hsv);
     }
 
 }
