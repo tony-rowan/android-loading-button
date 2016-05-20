@@ -8,8 +8,8 @@ android {
     applicationId "com.github.tonywills.loadingbutton.sample"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode VERSION_CODE
-        versionName VERSION_NAME
+        versionCode 1
+        versionName "0.0.1"
     }
     buildTypes {
         release {
