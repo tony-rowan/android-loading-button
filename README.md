@@ -57,3 +57,10 @@ A fully customized button could look like this
     style="@style/Widget.AppCompat.Button.Colored" />
 ```
 Be sure to inculde `xmlns:app="http://schemas.android.com/apk/res-auto"` at the top of your file to access the custom attributes.
+
+### Animations
+The button includes a default animation to move the text out and the spinner in. To customise this animation, subclass the
+button and override the `animateToState` method. See the library source to see an example animation.
+
+## Example App
+Take a look at the [example app](sample) to see how to use the button.
