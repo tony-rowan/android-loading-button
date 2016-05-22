@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
                 }, 3000);
             }
         });
-
     }
 
     private void setupActionBar() {
