@@ -7,40 +7,28 @@ import android.graphics.Color;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-/**
- * A Simple to include Loading button that auto disables on loading, comes with nice defaults.
- * You can customise the animations by subclassing this class and overriding the animateToState method.
- * @author Anthony Williams (github.com/92tonywills)
- */
-public class LoadingButton extends LinearLayout {
-
-    public enum State { DEFAULT, LOADING }
-    public enum LoadingPosition { LEFT, RIGHT }
+public class LoadingButton extends RelativeLayout {
 
     // Members
 
-    private LoadingPosition loadingPosition;
     private int buttonTintColor;
     private int loadingColor;
-    private String defaultText;
-    private String loadingText;
+    private String buttonText;
 
     private TextView textView;
-    private ProgressBar loadingViewLeft;
-    private ProgressBar loadingViewRight;
-    private State buttonState;
+    private ProgressBar loadingView;
+    private LoadingButtonState buttonState;
 
     // Constructors
 
     public LoadingButton(Context context, AttributeSet attrs) {
         super(context, attrs);
-        buttonState = State.DEFAULT;
+        buttonState = LoadingButtonState.DEFAULT;
         pullXmlAttributes(context, attrs);
-        setOrientation(HORIZONTAL);
         setBackgroundColor();
         LayoutInflater.from(context).inflate(R.layout.loading_button, this, true);
     }
@@ -61,14 +49,11 @@ public class LoadingButton extends LinearLayout {
     }
 
     private void pullXmlAttributes(Context context, AttributeSet attrs) {
-        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.LoadingButton, 0, 0);
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.HorizontalLoadingButton, 0, 0);
         try {
-            loadingPosition = a.getInt(R.styleable.LoadingButton_loadingPosition, 0) == 0 ?
-                    LoadingPosition.LEFT : LoadingPosition.RIGHT;
-            buttonTintColor = a.getColor(R.styleable.LoadingButton_buttonBackgroundTint, Color.rgb(255, 193, 7));
-            loadingColor = a.getColor(R.styleable.LoadingButton_loadingColor, Color.rgb(255, 193, 7));
-            defaultText = a.getString(R.styleable.LoadingButton_buttonTextDefault);
-            loadingText = a.getString(R.styleable.LoadingButton_buttonTextLoading);
+            buttonTintColor = a.getColor(R.styleable.HorizontalLoadingButton_buttonBackgroundTint, Color.rgb(255, 193, 7));
+            loadingColor = a.getColor(R.styleable.HorizontalLoadingButton_loadingColor, Color.rgb(255, 193, 7));
+            buttonText = a.getString(R.styleable.HorizontalLoadingButton_buttonTextDefault);
         } finally {
             a.recycle();
         }
@@ -79,25 +64,23 @@ public class LoadingButton extends LinearLayout {
     @Override protected void onFinishInflate() {
         super.onFinishInflate();
         textView = (TextView) findViewById(R.id.loading_button_text);
-        loadingViewLeft = (ProgressBar) findViewById(R.id.loading_button_spinner_left);
-        loadingViewRight = (ProgressBar) findViewById(R.id.loading_button_spinner_right);
+        loadingView = (ProgressBar) findViewById(R.id.loading_button_spinner);
 
-        textView.setText(defaultText);
+        textView.setText(buttonText);
         hideAllLoadingViews();
         setProgressBarColor();
     }
 
     private void hideAllLoadingViews() {
-        loadingViewLeft.setVisibility(INVISIBLE);
-        loadingViewRight.setVisibility(INVISIBLE);
-        loadingViewLeft.setAlpha(0f);
-        loadingViewRight.setAlpha(0f);
+        loadingView.setVisibility(INVISIBLE);
+        loadingView.setAlpha(0f);
+        loadingView.setScaleX(0);
+        loadingView.setScaleY(0);
     }
 
     private void setProgressBarColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            loadingViewLeft.setIndeterminateTintList(new ColorStateList(new int[][]{new int[] {}}, new int[]{loadingColor}));
-            loadingViewRight.setIndeterminateTintList(new ColorStateList(new int[][]{new int[] {}}, new int[]{loadingColor}));
+            loadingView.setIndeterminateTintList(new ColorStateList(new int[][]{new int[] {}}, new int[]{loadingColor}));
         }
     }
 
@@ -108,16 +91,16 @@ public class LoadingButton extends LinearLayout {
     }
 
     public ProgressBar getLoadingView() {
-        return loadingPosition == LoadingPosition.LEFT ? loadingViewLeft : loadingViewRight;
+        return loadingView;
     }
 
     public boolean isLoading() {
-        return buttonState == State.LOADING;
+        return buttonState == LoadingButtonState.LOADING;
     }
 
     public void setLoading(boolean loading) {
-        if (loading && buttonState == State.LOADING) { return; }
-        buttonState = loading ? State.LOADING : State.DEFAULT;
+        if (loading && buttonState == LoadingButtonState.LOADING) { return; }
+        buttonState = loading ? LoadingButtonState.LOADING : LoadingButtonState.DEFAULT;
         setEnabled(!loading);
         animateToState(buttonState);
     }
@@ -131,26 +114,9 @@ public class LoadingButton extends LinearLayout {
         setProgressBarColor();
     }
 
-    public void setButtonText(String text, State state) {
-        if (state == State.DEFAULT) {
-            defaultText = text;
-        } else {
-            loadingText = text;
-        }
-        textView.setText(buttonState == State.DEFAULT ? defaultText : loadingText);
-    }
-
-    public LoadingPosition getLoadingPosition() {
-        return loadingPosition;
-    }
-
-    public void setLoadingPosition(LoadingPosition loadingPosition) {
-        this.loadingPosition = loadingPosition;
-        if (buttonState == State.LOADING) {
-            hideAllLoadingViews();
-            getLoadingView().setAlpha(1f);
-            getLoadingView().setVisibility(VISIBLE);
-        }
+    public void setButtonText(String text, LoadingButtonState loadingButtonState) {
+        buttonText = text;
+        textView.setText(buttonText);
     }
 
     public int getButtonTintColor() {
@@ -166,31 +132,36 @@ public class LoadingButton extends LinearLayout {
 
     /**
      * Action to perform in order to move the button to the new state. The new state is always different
-     * to the current state.
-     * Override this to perform your own animations. You can get the currently shown loading view
-     * by calling getLoadingView().
-     * @param newState The newState of the button, guaranteed to be different.
+     * to the current state. Override this to perform your own animations.
+     * @param newLoadingButtonState The newLoadingButtonState of the button, guaranteed to be different.
      */
-    public void animateToState(State newState) {
-        if (newState == State.LOADING) {
+    public void animateToState(LoadingButtonState newLoadingButtonState) {
+        if (newLoadingButtonState == LoadingButtonState.LOADING) {
             showLoadingView();
+            hideTextView();
         } else {
             hideLoadingView();
+            showTextView();
         }
     }
 
+    private void hideTextView() {
+        textView.animate().alpha(0).translationY(textView.getMeasuredHeight());
+    }
+
+    private void showTextView() {
+        textView.animate().alpha(1).translationY(0);
+    }
+
     private void showLoadingView() {
-        textView.setText(loadingText);
-        ProgressBar loadingView = getLoadingView();
         loadingView.setVisibility(VISIBLE);
-        loadingView.setTranslationX(-loadingView.getMeasuredWidth());
-        loadingView.animate().alpha(1).translationX(0);
+        loadingView.setScaleX(0);
+        loadingView.setScaleY(0);
+        loadingView.animate().alpha(1).scaleX(1).scaleY(1);
     }
 
     private void hideLoadingView() {
-        textView.setText(defaultText);
-        ProgressBar loadingView = getLoadingView();
-        loadingView.animate().alpha(0).translationX(loadingView.getMeasuredWidth() * 3);
+        loadingView.animate().alpha(0).scaleX(3).scaleY(3);
     }
 
     // Static Helpers
@@ -204,4 +175,3 @@ public class LoadingButton extends LinearLayout {
     }
 
 }
-

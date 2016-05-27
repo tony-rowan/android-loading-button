@@ -23,16 +23,31 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-    <com.github.tonywills.loadingbutton.LoadingButton
-        android:id="@+id/loading_button"
-        android:layout_width="240dp"
-        android:layout_height="120dp"
-        android:layout_centerInParent="true"
-        app:buttonBackgroundTint="@color/belize_hole"
-        app:loadingColor="@color/sunflower"
-        app:loadingPosition="right"
-        app:buttonTextDefault="Go"
-        app:buttonTextLoading="Loading"
-        style="@style/Widget.AppCompat.Button.Colored" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+        <com.github.tonywills.loadingbutton.HorizontalLoadingButton
+            android:id="@+id/horizontal_loading_button"
+            android:layout_width="240dp"
+            android:layout_height="120dp"
+            app:buttonBackgroundTint="@color/belize_hole"
+            app:loadingColor="@color/sunflower"
+            app:loadingPosition="right"
+            app:buttonTextDefault="Go"
+            app:buttonTextLoading="Loading"
+            style="@style/Widget.AppCompat.Button.Colored" />
+
+        <com.github.tonywills.loadingbutton.LoadingButton
+            android:id="@+id/loading_button"
+            android:layout_width="240dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="24dp"
+            app:buttonBackgroundTint="@color/belize_hole"
+            app:loadingColor="@color/sunflower"
+            app:buttonTextDefault="Go"
+            style="@style/Widget.AppCompat.Button.Colored" />
+    </LinearLayout>
 
 </RelativeLayout>

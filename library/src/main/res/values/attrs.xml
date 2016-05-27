@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="LoadingButton">
+    <declare-styleable name="HorizontalLoadingButton">
         <attr name="buttonBackgroundTint" format="color" />
         <attr name="loadingColor" format="color" />
         <attr name="buttonTextDefault" format="string" />

@@ -1,5 +1,5 @@
 # Android Loading Button
-A simple button with a loading state and animations for Android.
+A simple button with a loading loadingButtonState and animations for Android.
 
 ## Features
 - Easy to install and use.
@@ -33,7 +33,7 @@ The button tints itself correctly with this style.
 The following attributes are available for you to customize the look of the button
 
 - `buttonBackgroundTint`: a colour resource
-    - The normal colour of the button. A lighter version of this colour will be used for the disabled state when the button is loading.
+    - The normal colour of the button. A lighter version of this colour will be used for the disabled loadingButtonState when the button is loading.
 - `loadingColor`: a colour resource
     - The colour of the progress indicator, on material supporting devices, this will be the pretty Android spinner
 - `buttonTextDefault`: a string resource
