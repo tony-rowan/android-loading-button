@@ -29,23 +29,8 @@ public class LoadingButton extends RelativeLayout {
         super(context, attrs);
         buttonState = LoadingButtonState.DEFAULT;
         pullXmlAttributes(context, attrs);
-        setBackgroundColor();
+        Utils.setBackgroundColor(this, buttonTintColor);
         LayoutInflater.from(context).inflate(R.layout.loading_button, this, true);
-    }
-
-    private void setBackgroundColor() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setBackgroundTintList(new ColorStateList(
-                    new int[][] {
-                            ENABLED_STATE_SET,
-                            new int[] {}
-                    }, new int[] {
-                    buttonTintColor,
-                    getLessVibrantColor(buttonTintColor, 1.25f)
-            }));
-        } else {
-            setBackgroundColor(buttonTintColor);
-        }
     }
 
     private void pullXmlAttributes(Context context, AttributeSet attrs) {
@@ -125,7 +110,7 @@ public class LoadingButton extends RelativeLayout {
 
     public void setButtonTintColor(int buttonTintColor) {
         this.buttonTintColor = buttonTintColor;
-        setBackgroundColor();
+        Utils.setBackgroundColor(this, buttonTintColor);
     }
 
     // Animation
@@ -162,16 +147,6 @@ public class LoadingButton extends RelativeLayout {
 
     private void hideLoadingView() {
         loadingView.animate().alpha(0).scaleX(3).scaleY(3);
-    }
-
-    // Static Helpers
-
-    private static int getLessVibrantColor(int colour, float factor) {
-        float[] hsv = new float[3];
-        Color.colorToHSV(colour, hsv);
-        hsv[1] *= 1 / factor;
-        hsv[2] *= factor;
-        return Color.HSVToColor(hsv);
     }
 
 }

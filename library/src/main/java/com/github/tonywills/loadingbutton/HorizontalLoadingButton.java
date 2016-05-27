@@ -41,23 +41,8 @@ public class HorizontalLoadingButton extends LinearLayout {
         buttonState = State.DEFAULT;
         pullXmlAttributes(context, attrs);
         setOrientation(HORIZONTAL);
-        setBackgroundColor();
+        Utils.setBackgroundColor(this, buttonTintColor);
         LayoutInflater.from(context).inflate(R.layout.horizontal_loading_button, this, true);
-    }
-
-    private void setBackgroundColor() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setBackgroundTintList(new ColorStateList(
-                    new int[][] {
-                            ENABLED_STATE_SET,
-                            new int[] {}
-                    }, new int[] {
-                    buttonTintColor,
-                    getLessVibrantColor(buttonTintColor, 1.25f)
-            }));
-        } else {
-            setBackgroundColor(buttonTintColor);
-        }
     }
 
     private void pullXmlAttributes(Context context, AttributeSet attrs) {
@@ -165,7 +150,7 @@ public class HorizontalLoadingButton extends LinearLayout {
 
     public void setButtonTintColor(int buttonTintColor) {
         this.buttonTintColor = buttonTintColor;
-        setBackgroundColor();
+        Utils.setBackgroundColor(this, buttonTintColor);
     }
 
     // Animation
@@ -197,16 +182,6 @@ public class HorizontalLoadingButton extends LinearLayout {
         textView.setText(defaultText);
         ProgressBar loadingView = getLoadingView();
         loadingView.animate().alpha(0).translationX(loadingView.getMeasuredWidth() * 3);
-    }
-
-    // Static Helpers
-
-    private static int getLessVibrantColor(int colour, float factor) {
-        float[] hsv = new float[3];
-        Color.colorToHSV(colour, hsv);
-        hsv[1] *= 1 / factor;
-        hsv[2] *= factor;
-        return Color.HSVToColor(hsv);
     }
 
 }
