@@ -65,12 +65,18 @@ public class HorizontalLoadingButton extends LinearLayout {
         try {
             loadingPosition = a.getInt(R.styleable.HorizontalLoadingButton_loadingPosition, 0) == 0 ?
                     LoadingPosition.LEFT : LoadingPosition.RIGHT;
-            buttonTintColor = a.getColor(R.styleable.HorizontalLoadingButton_buttonBackgroundTint, Color.rgb(255, 193, 7));
-            loadingColor = a.getColor(R.styleable.HorizontalLoadingButton_loadingColor, Color.rgb(255, 193, 7));
             defaultText = a.getString(R.styleable.HorizontalLoadingButton_buttonTextDefault);
             loadingText = a.getString(R.styleable.HorizontalLoadingButton_buttonTextLoading);
         } finally {
             a.recycle();
+        }
+
+        TypedArray b = context.getTheme().obtainStyledAttributes(attrs, R.styleable.LoadingButton, 0, 0);
+        try {
+            buttonTintColor = a.getColor(R.styleable.LoadingButton_buttonBackgroundTint, Color.rgb(255, 193, 7));
+            loadingColor = a.getColor(R.styleable.LoadingButton_loadingColor, Color.rgb(255, 193, 7));
+        } finally {
+            b.recycle();
         }
     }
 

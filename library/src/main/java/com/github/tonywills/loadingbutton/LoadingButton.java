@@ -49,11 +49,11 @@ public class LoadingButton extends RelativeLayout {
     }
 
     private void pullXmlAttributes(Context context, AttributeSet attrs) {
-        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.HorizontalLoadingButton, 0, 0);
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.LoadingButton, 0, 0);
         try {
-            buttonTintColor = a.getColor(R.styleable.HorizontalLoadingButton_buttonBackgroundTint, Color.rgb(255, 193, 7));
-            loadingColor = a.getColor(R.styleable.HorizontalLoadingButton_loadingColor, Color.rgb(255, 193, 7));
-            buttonText = a.getString(R.styleable.HorizontalLoadingButton_buttonTextDefault);
+            buttonTintColor = a.getColor(R.styleable.LoadingButton_buttonBackgroundTint, Color.rgb(255, 193, 7));
+            loadingColor = a.getColor(R.styleable.LoadingButton_loadingColor, Color.rgb(255, 193, 7));
+            buttonText = a.getString(R.styleable.LoadingButton_buttonText);
         } finally {
             a.recycle();
         }
